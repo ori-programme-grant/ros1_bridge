@@ -33,13 +33,13 @@
 
 int main(int argc, char * argv[])
 {
-  // ROS 1 node
-  ros::init(argc, argv, "ros_bridge");
-  ros::NodeHandle ros1_node;
-
   // ROS 2 node
   rclcpp::init(argc, argv);
   auto ros2_node = rclcpp::Node::make_shared("ros_bridge");
+
+  // ROS 1 node
+  ros::init(argc, argv, "ros_bridge");
+  ros::NodeHandle ros1_node;
 
   std::list<ros1_bridge::BridgeHandles> all_handles;
   std::list<ros1_bridge::ServiceBridge1to2> service_bridges_1_to_2;
@@ -58,7 +58,9 @@ int main(int argc, char * argv[])
   // type: the type of the service to bridge (e.g. 'pkgname/srv/SrvName')
   const char * services_1_to_2_parameter_name = "services_1_to_2";
   const char * services_2_to_1_parameter_name = "services_2_to_1";
-  if (argc > 1) {
+  // commented out the following line because it's not compatible with the 
+  // --ros-args argument
+  /*if (argc > 1) {
     topics_parameter_name = argv[1];
   }
   if (argc > 2) {
@@ -66,7 +68,7 @@ int main(int argc, char * argv[])
   }
   if (argc > 3) {
     services_2_to_1_parameter_name = argv[3];
-  }
+  }*/
 
   // Topics
   XmlRpc::XmlRpcValue topics;
